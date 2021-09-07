@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bot Detector  App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+</head>
+
+<script>
+
+
+function myFunction() {
+var button = document.getElementById("button");
+var d3 = document.getElementById("d3");
+
+
+var text1= $('#text1').val();
+    button.style.display="none";
+    d3.style.display="block";
+    
+
+    d3.removeAttribute("hidden");
+  $.ajax({
+              url: "/join",
+              type: "POST",
+              data: {text1:text1
+              }
+
+          }).done(function(response) {
+
+            var html= "<br><br><br><p> <b> LIKELIHOOD OF BEING A BOT : <b><p>";
+	  
+            response =response.result;
+                 $.each(response,function(key,val){
+                 console.log(val);
+                    html+="<p>"+val+"<p>"
+
+                });
+                html +="<br>";
+                $(".show-data").append(html); 
+
+	        
+<!--	  <button id="clicked" onclick=”history.go(0)”>New Search</button>   -->
+
+            });
+};
+
+  </script>
+<body>
+    <p>
+        TWITTER BOT DETECTOR<br><br>
+
+            Enter twitter screenname  <input type="text" id="text1" name="text1"><br><br>
+            
+
+           <input id="button" type="button" value="Submit" onclick="myFunction()"><br><br>
+		    
+        </p>
+    <div class="show-data" ><br><br>
+
+
+    <input id="d3" type="button" value="New Search" style="display:none; " onclick="window.location.reload();">
+<!--      <button onClick="window.location.reload();">New Search</button>  -->
+    </div>
+</body>
+</html>
